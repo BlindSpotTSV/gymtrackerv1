@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Workout History{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3"><h1 class="h3 mb-0">Workout History</h1><a class="btn btn-primary" href="{{ url_for('web.new_workout') }}">+ Workout</a></div>
+{% for w in workouts %}
+<div class="card p-3 mb-3">
+  <div class="d-flex justify-content-between"><h2 class="h5">{{ w.name }}</h2><span class="text-secondary small">{{ w.started_at }}</span></div>
+  {% if w.notes %}<p class="text-secondary">{{ w.notes }}</p>{% endif %}
+  <div class="table-responsive"><table class="table table-sm mb-0"><thead><tr><th>Exercise</th><th>Set</th><th>Reps</th><th>Weight</th><th>RPE</th></tr></thead>
+  <tbody>{% for s in w.sets %}<tr><td>{{ s.exercise.name }}</td><td>{{ s.set_number }}</td><td>{{ s.reps }}</td><td>{{ s.weight_kg }} kg</td><td>{{ s.rpe or '-' }}</td></tr>{% endfor %}</tbody></table></div>
+</div>
+{% else %}<div class="alert alert-info">Belum ada riwayat latihan.</div>{% endfor %}
+{% endblock %}

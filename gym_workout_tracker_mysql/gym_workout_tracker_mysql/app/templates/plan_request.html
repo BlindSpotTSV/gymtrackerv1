@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Request Workout Plan{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-lg-7"><div class="card p-4">
+<h1 class="h4 mb-3">Minta Program Latihan kepada Coach</h1>
+<form method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="mb-3"><label class="form-label">Pilih Coach</label><select class="form-select" name="coach_id" required><option value="">Pilih Coach</option>{% for c in coaches %}<option value="{{ c.id }}">{{ c.full_name }}</option>{% endfor %}</select></div>
+<div class="mb-3"><label class="form-label">Tujuan latihan</label><input class="form-control" name="goal" placeholder="Hypertrophy / Strength / Fat loss" required></div>
+<div class="mb-3"><label class="form-label">Catatan</label><textarea class="form-control" name="notes" rows="3"></textarea></div>
+<button class="btn btn-primary">Kirim Permintaan</button>
+</form></div></div></div>
+{% endblock %}

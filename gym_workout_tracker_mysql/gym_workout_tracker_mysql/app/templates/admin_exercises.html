@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Manage Exercises{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Kelola Exercise</h1>
+<div class="card p-3 mb-3"><h2 class="h5">Tambah Exercise</h2>
+<form method="post" class="row g-2">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="col-md-4"><input class="form-control" name="name" placeholder="Nama exercise" required></div>
+<div class="col-md-3"><input class="form-control" name="muscle_group" placeholder="Muscle group" required></div>
+<div class="col-md-2"><input class="form-control" name="equipment" placeholder="Equipment"></div>
+<div class="col-md-2"><select class="form-select" name="difficulty"><option>beginner</option><option>intermediate</option><option>advanced</option></select></div>
+<div class="col-md-1"><button class="btn btn-primary">Add</button></div>
+</form></div>
+<div class="card p-3"><div class="table-responsive"><table class="table align-middle mb-0"><thead><tr><th>Name</th><th>Muscle</th><th>Equipment</th><th>Status</th><th>Aksi</th></tr></thead><tbody>
+{% for e in exercises %}<tr><td>{{ e.name }}</td><td>{{ e.muscle_group }}</td><td>{{ e.equipment or '-' }}</td><td>{{ 'Active' if e.is_active else 'Inactive' }}</td><td>
+<form method="post" action="{{ url_for('web.admin_toggle_exercise', exercise_id=e.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="btn btn-sm btn-outline-secondary">{{ 'Nonaktifkan' if e.is_active else 'Aktifkan' }}</button>
+</form></td></tr>{% endfor %}
+</tbody></table></div></div>
+{% endblock %}

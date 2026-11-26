@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Create Workout Plan{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Buat Workout Plan</h1>
+<form method="post" class="card p-4">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="mb-3"><label class="form-label">Member</label><select class="form-select" name="member_id" required><option value="">Pilih Member</option>{% for m in clients %}<option value="{{ m.id }}">{{ m.full_name }}</option>{% endfor %}</select></div>
+<div class="mb-3"><label class="form-label">Judul program</label><input class="form-control" name="title" required></div>
+<div class="mb-3"><label class="form-label">Deskripsi</label><textarea class="form-control" name="description"></textarea></div>
+<h2 class="h5">Exercise program</h2>
+<div class="table-responsive"><table class="table"><thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Rest (sec)</th></tr></thead><tbody>
+{% for row in range(1, 5) %}<tr>
+<td><select class="form-select" name="exercise_id"><option value="">Pilih</option>{% for e in exercises %}<option value="{{ e.id }}">{{ e.name }}</option>{% endfor %}</select></td>
+<td><input class="form-control" type="number" min="1" name="target_sets" value="3"></td>
+<td><input class="form-control" name="target_reps" value="8-12"></td>
+<td><input class="form-control" type="number" min="0" name="rest_seconds" value="90"></td>
+</tr>{% endfor %}
+</tbody></table></div>
+<button class="btn btn-primary align-self-start">Simpan dan Berikan Program</button>
+</form>
+{% endblock %}

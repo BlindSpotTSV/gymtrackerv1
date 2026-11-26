@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Plan Requests{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Permintaan Workout Plan</h1>
+{% for r in requests_list %}
+<div class="card p-3 mb-3"><div class="d-flex justify-content-between"><strong>{{ r.member.full_name }}</strong><span class="badge text-bg-warning">{{ r.status }}</span></div>
+<p class="mb-1">Goal: {{ r.goal }}</p><p class="text-secondary">{{ r.notes or 'Tidak ada catatan.' }}</p>
+<form method="post" action="{{ url_for('web.coach_decision', request_id=r.id) }}" class="d-flex gap-2">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<button class="btn btn-success btn-sm" name="decision" value="accept">Terima</button>
+<button class="btn btn-outline-danger btn-sm" name="decision" value="reject">Tolak</button>
+</form></div>
+{% else %}<div class="alert alert-info">Tidak ada permintaan pending.</div>{% endfor %}
+{% endblock %}

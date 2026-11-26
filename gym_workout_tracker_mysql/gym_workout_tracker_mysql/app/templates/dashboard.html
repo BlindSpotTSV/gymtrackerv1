@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - GymTracker{% endblock %}
+{% block content %}
+<h1 class="h3 mb-1">Dashboard</h1>
+<p class="text-secondary mb-4">Selamat datang, {{ current_user.full_name }}.</p>
+{% if current_user.role == 'member' %}
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="card p-3"><div class="text-secondary">Workout terakhir</div><div class="h3">{{ recent_workouts|length }}</div></div></div>
+  <div class="col-md-4"><div class="card p-3"><div class="text-secondary">Program aktif</div><div class="h3">{{ plans|length }}</div></div></div>
+  <div class="col-md-4"><div class="card p-3"><a class="btn btn-primary" href="{{ url_for('web.new_workout') }}">+ Catat Workout</a></div></div>
+</div>
+<div class="card p-3"><h2 class="h5">Workout terbaru</h2>
+{% if recent_workouts %}<ul class="list-group list-group-flush">{% for w in recent_workouts %}<li class="list-group-item d-flex justify-content-between"><span>{{ w.name }}</span><span class="text-secondary">{{ w.started_at }}</span></li>{% endfor %}</ul>{% else %}<p class="text-secondary mb-0">Belum ada workout.</p>{% endif %}
+</div>
+{% elif current_user.role == 'coach' %}
+<div class="row g-3">
+<div class="col-md-6"><div class="card p-3"><div class="text-secondary">Jumlah klien</div><div class="h2">{{ clients|length }}</div><a href="{{ url_for('web.coach_clients') }}">Lihat klien</a></div></div>
+<div class="col-md-6"><div class="card p-3"><div class="text-secondary">Permintaan pending</div><div class="h2">{{ requests_list|length }}</div><a href="{{ url_for('web.coach_requests') }}">Lihat permintaan</a></div></div>
+</div>
+{% else %}
+<div class="row g-3">{% for key, value in status.items() %}<div class="col-6 col-md-3"><div class="card p-3"><div class="text-secondary">{{ key|replace('_',' ')|title }}</div><div class="h3">{{ value }}</div></div></div>{% endfor %}</div>
+{% endif %}
+{% endblock %}

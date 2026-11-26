@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Client Progress{% endblock %}
+{% block content %}
+<h1 class="h3 mb-3">Progres: {{ progress.member.full_name }}</h1>
+<div class="row g-3 mb-3">
+<div class="col-md-6"><div class="card p-3"><div class="text-secondary">Jumlah workout</div><div class="h2">{{ progress.workout_count }}</div></div></div>
+<div class="col-md-6"><div class="card p-3"><div class="text-secondary">Total volume working sets (kg × reps)</div><div class="h2">{{ "%.2f"|format(progress.total_volume_kg_reps) }}</div></div></div>
+</div>
+<div class="card p-3"><h2 class="h5">Workout terbaru</h2>
+{% for w in progress.recent_workouts %}<div class="border-bottom py-2"><strong>{{ w.name }}</strong><div class="small text-secondary">{{ w.started_at }}</div></div>{% else %}<p class="text-secondary">Belum ada workout.</p>{% endfor %}
+</div>
+{% endblock %}

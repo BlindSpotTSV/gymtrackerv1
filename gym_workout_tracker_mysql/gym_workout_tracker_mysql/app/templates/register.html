@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Registrasi - GymTracker{% endblock %}
+{% block content %}
+<div class="row justify-content-center"><div class="col-md-7 col-lg-6">
+<div class="card p-4">
+<h2 class="h4 mb-3">Registrasi Member</h2>
+<form method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="mb-3"><label class="form-label">Nama lengkap</label><input class="form-control" name="full_name" maxlength="120" required></div>
+  <div class="mb-3"><label class="form-label">Email</label><input class="form-control" type="email" name="email" required></div>
+  <div class="mb-3"><label class="form-label">Password (minimal 10 karakter)</label><input class="form-control" type="password" name="password" minlength="10" required></div>
+  <button class="btn btn-primary">Daftar sebagai Member</button>
+</form>
+</div></div></div>
+{% endblock %}
